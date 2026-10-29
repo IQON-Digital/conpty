@@ -17,7 +17,7 @@ fn write_and_read() {
 
     let mut line = String::new();
     reader.read_line(&mut line).unwrap();
-    assert_eq!(strip(line.as_bytes()).unwrap(), b"hello cat\n");
+    assert_eq!(strip(line.as_bytes()), b"hello cat\n");
 
     drop(writer);
     drop(reader);
@@ -71,11 +71,11 @@ fn read_until() {
     let mut buf = Vec::new();
     reader.read_until(b' ', &mut buf).unwrap();
 
-    assert_eq!(strip(&buf).unwrap(), b"Hello ");
+    assert_eq!(strip(&buf), b"Hello ");
 
     let mut buf = vec![0; 128];
     let n = reader.read(&mut buf).unwrap();
-    assert_eq!(strip(&buf[..n]).unwrap(), b"World");
+    assert_eq!(strip(&buf[..n]), b"World");
 }
 
 #[test]
@@ -90,7 +90,7 @@ fn read_blocks_after_process_exit() {
 
     let mut buf = [0; 128];
     reader.read(&mut buf).unwrap();
-    assert_eq!(strip(buf).unwrap(), b"Hello World");
+    assert_eq!(strip(buf), b"Hello World");
 
     proc.exit(1).unwrap();
 
@@ -117,7 +117,7 @@ fn read_blocks_after_process_exit_with_no_output() {
 
     let mut buf = [0; 128];
     reader.read(&mut buf).unwrap();
-    assert_eq!(strip(buf).unwrap(), b"Hello World");
+    assert_eq!(strip(buf), b"Hello World");
 
     proc.exit(1).unwrap();
 
